@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,7 +46,8 @@ namespace Balthazariy.TreeDestroyer.Player
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY TREE ====</color>");
                 Dispose();
 
-
+                // сделать для проверки попадания отдельний контроллер в котором нужно инвокать ивент и после уже спавнить чекер. Таким образом освободится булет
+                // от лишней логики
             }
         }
 
