@@ -12,6 +12,9 @@ namespace Balthazariy.TreeDestroyer.Player
 
         [SerializeField] private float _speed;
 
+        [SerializeField] private float _moveDecreaseScaleFactor;
+        [SerializeField] private GameObject _playerObject;
+
         private void Start()
         {
             _isMooving = false;
@@ -27,7 +30,10 @@ namespace Balthazariy.TreeDestroyer.Player
         private void Update()
         {
             if (_isMooving)
+            {
                 transform.Translate(_moveVector * _speed * Time.deltaTime);
+                _playerObject.transform.localScale -= new Vector3(_moveDecreaseScaleFactor, _moveDecreaseScaleFactor, _moveDecreaseScaleFactor);
+            }
         }
 
         private void OnTriggerEnter(Collider other)

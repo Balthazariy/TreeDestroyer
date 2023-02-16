@@ -26,6 +26,11 @@ namespace Balthazariy.TreeDestroyer.Player
             _selfObject.transform.position = worldPosition;
         }
 
+        public void UpdateScale(float scaleFactor)
+        {
+            transform.localScale += new Vector3(scaleFactor, 0, scaleFactor);
+        }
+
         private void Dispose()
         {
             _isAlive = false;

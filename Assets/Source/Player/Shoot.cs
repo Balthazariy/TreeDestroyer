@@ -14,6 +14,10 @@ namespace Balthazariy.TreeDestroyer.Player
         [SerializeField] private Transform _shootPivot;
 
         [SerializeField] private Move _movePlayer;
+        [SerializeField] private GameObject _playerObject;
+
+        [SerializeField] private float _tapDecreaseScaleFactor;
+        [SerializeField] private float _holdTapDecreaseScaleFactor;
 
         private bool _canShoot;
         private float _cooldown = 0.5f;
@@ -31,10 +35,10 @@ namespace Balthazariy.TreeDestroyer.Player
             Main.Instance.InputController.ScreenTouchEvent -= OnScreenTouchEventHandler;
         }
 
-        private void OnScreenTouchEventHandler()
+        private void OnScreenTouchEventHandler(byte force)
         {
             Debug.Log("<color=#0E72E8>==== SHOOTED ====</color>");
-            DoShoot();
+            DoShoot(force);
         }
 
         private void Update()
@@ -51,25 +55,31 @@ namespace Balthazariy.TreeDestroyer.Player
             }
         }
 
-        private void DoShoot()
+        private void DoShoot(byte force)
         {
             if (_canShoot)
             {
+                float scaleFactor = force == 0 ? 0 : (force == 1 ? _tapDecreaseScaleFactor : _holdTapDecreaseScaleFactor);
+
+                    _playerObject.transform.localScale -= new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
                 Bullet currentBullet = Instantiate(_bulletPrefabObject, _bulletParent).GetComponent<Bullet>();
                 currentBullet.DestroyBulletEvent += DestroyBulletEventHandler;
                 currentBullet.Init(_finishObject);
+                currentBullet.UpdateScale(scaleFactor);
 
                 _couldownTimer = _cooldown;
                 _canShoot = false;
             }
         }
 
-        public void DestroyBulletEventHandler(bool isTree, Vector3 worldPosition)
+        public void DestroyBulletEventHandler(bool isTree, Vector3 worldPosition, float scaleFactor)
         {
             if (isTree)
             {
                 TreeChecker checker = Instantiate(_treeCheckerPrefabObject, _bulletParent).GetComponent<TreeChecker>();
                 checker.Init(worldPosition);
+                checker.UpdateScale(scaleFactor);
             }
             else
             {

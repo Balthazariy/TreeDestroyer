@@ -7,7 +7,7 @@ namespace Balthazariy.TreeDestroyer.Player
 {
     public class Bullet : MonoBehaviour
     {
-        public event Action<bool, Vector3> DestroyBulletEvent;
+        public event Action<bool, Vector3, float> DestroyBulletEvent;
 
         private GameObject _selfObject;
         private GameObject _finishObject;
@@ -16,7 +16,10 @@ namespace Balthazariy.TreeDestroyer.Player
 
         private bool _isAlive;
 
+        private float _scaleFactor;
+
         [SerializeField] private float _speed;
+        [SerializeField] private GameObject _modelObject;
 
         public void Init(GameObject finishObject)
         {
@@ -27,6 +30,12 @@ namespace Balthazariy.TreeDestroyer.Player
             _moveVector = new Vector3(0.5f, 0, 0.5f); // move object diagonaly
 
             _isAlive = true;
+        }
+
+        public void UpdateScale(float scaleFactor)
+        {
+            _scaleFactor = scaleFactor;
+            transform.localScale += new Vector3(_scaleFactor, _scaleFactor, _scaleFactor);
         }
 
         private void FixedUpdate()
@@ -43,13 +52,13 @@ namespace Balthazariy.TreeDestroyer.Player
             {
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY FINISH ====</color>");
                 // start move player to finish
-                DestroyBulletEvent?.Invoke(false, _selfObject.transform.position);
+                DestroyBulletEvent?.Invoke(false, _selfObject.transform.position, _scaleFactor);
                 Dispose();
             }
             else if (other.name == "Tree(Clone)")
             {
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY TREE ====</color>");
-                DestroyBulletEvent?.Invoke(true, _selfObject.transform.position);
+                DestroyBulletEvent?.Invoke(true, _selfObject.transform.position, _scaleFactor);
                 Dispose();
             }
 

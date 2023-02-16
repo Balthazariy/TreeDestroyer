@@ -5,7 +5,7 @@ namespace Balthazariy.TreeDestroyer.Controllers
 {
     public class InputController
     {
-        public event Action ScreenTouchEvent;
+        public event Action<byte> ScreenTouchEvent;
 
         private MainPage _mainPage;
 
@@ -25,10 +25,10 @@ namespace Balthazariy.TreeDestroyer.Controllers
             _mainPage.ShootButtonClickEvent -= ShootButtonClickEventHandler;
         }
 
-        private void ShootButtonClickEventHandler()
+        private void ShootButtonClickEventHandler(byte force)
         {
             if (!IsEndedGame)
-                ScreenTouchEvent?.Invoke();
+                ScreenTouchEvent?.Invoke(force);
         }
     }
 }

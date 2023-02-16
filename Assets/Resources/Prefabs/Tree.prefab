@@ -62,6 +62,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minScaleFactor: 0.5
   _maxScaleFactor: 2
+  _infectedMaterial: {fileID: 2100000, guid: 713bd881be2d7894592fc4a1ea914a53, type: 2}
+  _meshRenderer:
+  - {fileID: 1591242982875197584}
+  - {fileID: 7981241396025202236}
 --- !u!1 &4647010766959575978
 GameObject:
   m_ObjectHideFlags: 0

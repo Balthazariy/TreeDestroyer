@@ -160,3 +160,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441b42ee3f3a4aa4d8184d4b2db4d3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countdown: 1

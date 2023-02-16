@@ -14,7 +14,8 @@ namespace Balthazariy.TreeDestroyer.Trees
         [SerializeField] private float _minScaleFactor;
         [SerializeField] private float _maxScaleFactor;
 
-        public bool IsInfected { get => _isInfected; private set => _isInfected = value; }
+        [SerializeField] private Material _infectedMaterial;
+        [SerializeField] private MeshRenderer[] _meshRenderer;
 
         private void Awake()
         {
@@ -33,6 +34,9 @@ namespace Balthazariy.TreeDestroyer.Trees
 
         public void InitInfectedTree()
         {
+            for (int i = 0; i < _meshRenderer.Length; i++)
+                _meshRenderer[i].material = _infectedMaterial;
+
             _countdownTimer = _countdown;
             _isInfected = true;
         }
