@@ -16,10 +16,13 @@ namespace Balthazariy.TreeDestroyer.Player
 
         private bool _canShoot;
         private float _cooldown = 0.5f;
+        private float _couldownTimer;
 
         private void Start()
         {
             Main.Instance.InputController.ScreenTouchEvent += OnScreenTouchEventHandler;
+
+            _canShoot = true;
         }
 
         private void OnDisable()
@@ -30,15 +33,33 @@ namespace Balthazariy.TreeDestroyer.Player
         private void OnScreenTouchEventHandler()
         {
             Debug.Log("<color=#0E72E8>==== SHOOTED ====</color>");
-
             InitShoot();
+        }
+
+        private void Update()
+        {
+            if (!_canShoot)
+            {
+                _couldownTimer -= Time.deltaTime;
+
+                if (_couldownTimer <= 0)
+                {
+                    _couldownTimer = _cooldown;
+                    _canShoot = true;
+                }
+            }
         }
 
         private void InitShoot()
         {
-            _currentBullet = Instantiate(_bulletPrefabObject).GetComponent<Bullet>();
+            if (_canShoot)
+            {
+                _currentBullet = Instantiate(_bulletPrefabObject, _bulletParent).GetComponent<Bullet>();
+                _currentBullet.Init(_finishObject);
 
-            _currentBullet.Init(_finishObject, _bulletParent);
+                _couldownTimer = _cooldown;
+                _canShoot = false;
+            }
         }
     }
 }

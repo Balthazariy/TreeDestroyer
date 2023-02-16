@@ -15,11 +15,9 @@ namespace Balthazariy.TreeDestroyer.Player
 
         [SerializeField] private float _speed;
 
-        public void Init(GameObject finishObject, Transform parent)
+        public void Init(GameObject finishObject)
         {
             _selfObject = this.gameObject;
-
-            _selfObject.transform.SetParent(parent);
 
             _finishObject = finishObject;
 
@@ -40,10 +38,22 @@ namespace Balthazariy.TreeDestroyer.Player
         {
             if (other.gameObject == _finishObject)
             {
-                Debug.Log("<color=#9EF20F>==== BULLET DESTROYED ====</color>");
-                _isAlive = false;
-                Destroy(this.gameObject);
+                Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY FINISH ====</color>");
+                Dispose();
             }
+            else
+            {
+                Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY TREE ====</color>");
+                Dispose();
+
+
+            }
+        }
+
+        private void Dispose()
+        {
+            _isAlive = false;
+            Destroy(this.gameObject);
         }
     }
 }
