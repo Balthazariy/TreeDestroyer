@@ -29,7 +29,8 @@ namespace Balthazariy.TreeDestroyer.Trees
             {
                 Tree tree = Instantiate(_treePrefabObject, _treeParent).GetComponent<Tree>();
 
-                Vector3 generatedPos = new Vector3(UnityEngine.Random.Range(_pivot0.position.x, _pivot1.position.x), 0, UnityEngine.Random.Range(_pivot0.position.z, _pivot1.position.z));
+                Vector3 generatedPos = new Vector3(UnityEngine.Random.Range(_pivot0.position.x, _pivot1.position.x), 0, 
+                                                   UnityEngine.Random.Range(_pivot0.position.z, _pivot1.position.z));
 
                 tree.Init(generatedPos);
                 _trees.Add(tree);

@@ -11,6 +11,11 @@ namespace Balthazariy.TreeDestroyer.Trees
         private float _countdown = 1f;
         private float _countdownTimer;
 
+        [SerializeField] private float _minScaleFactor;
+        [SerializeField] private float _maxScaleFactor;
+
+        public bool IsInfected { get => _isInfected; private set => _isInfected = value; }
+
         private void Awake()
         {
             _selfObject = this.gameObject;
@@ -20,9 +25,13 @@ namespace Balthazariy.TreeDestroyer.Trees
         public void Init(Vector3 pos)
         {
             _selfObject.transform.position = pos;
+            _selfObject.transform.localScale = new Vector3(UnityEngine.Random.Range(_minScaleFactor, _maxScaleFactor), 1, 
+                                                           UnityEngine.Random.Range(_minScaleFactor, _maxScaleFactor));
+
+            _selfObject.transform.Rotate(new Vector3(0, UnityEngine.Random.Range(0, 360), 0));
         }
 
-        private void InfectedAreaEventHandler()
+        public void InitInfectedTree()
         {
             _countdownTimer = _countdown;
             _isInfected = true;

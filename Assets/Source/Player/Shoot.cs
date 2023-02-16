@@ -8,11 +8,10 @@ namespace Balthazariy.TreeDestroyer.Player
     {
         [SerializeField] private GameObject _finishObject;
         [SerializeField] private GameObject _bulletPrefabObject;
+        [SerializeField] private GameObject _treeCheckerPrefabObject;
 
         [SerializeField] private Transform _bulletParent;
         [SerializeField] private Transform _shootPivot;
-
-        private Bullet _currentBullet;
 
         private bool _canShoot;
         private float _cooldown = 0.5f;
@@ -33,7 +32,7 @@ namespace Balthazariy.TreeDestroyer.Player
         private void OnScreenTouchEventHandler()
         {
             Debug.Log("<color=#0E72E8>==== SHOOTED ====</color>");
-            InitShoot();
+            DoShoot();
         }
 
         private void Update()
@@ -50,15 +49,25 @@ namespace Balthazariy.TreeDestroyer.Player
             }
         }
 
-        private void InitShoot()
+        private void DoShoot()
         {
             if (_canShoot)
             {
-                _currentBullet = Instantiate(_bulletPrefabObject, _bulletParent).GetComponent<Bullet>();
-                _currentBullet.Init(_finishObject);
+                Bullet currentBullet = Instantiate(_bulletPrefabObject, _bulletParent).GetComponent<Bullet>();
+                currentBullet.DestroyBulletEvent += DestroyBulletEventHandler;
+                currentBullet.Init(_finishObject);
 
                 _couldownTimer = _cooldown;
                 _canShoot = false;
+            }
+        }
+
+        public void DestroyBulletEventHandler(bool isTree, Vector3 worldPosition)
+        {
+            if (isTree)
+            {
+                TreeChecker checker = Instantiate(_treeCheckerPrefabObject, _bulletParent).GetComponent<TreeChecker>();
+                checker.Init(worldPosition);
             }
         }
     }

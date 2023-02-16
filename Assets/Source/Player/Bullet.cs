@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Balthazariy.TreeDestroyer.Player
 {
     public class Bullet : MonoBehaviour
     {
+        public event Action<bool, Vector3> DestroyBulletEvent;
+
         private GameObject _selfObject;
         private GameObject _finishObject;
 
@@ -39,16 +42,17 @@ namespace Balthazariy.TreeDestroyer.Player
             if (other.gameObject == _finishObject)
             {
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY FINISH ====</color>");
+                // start move player to finish
+                DestroyBulletEvent?.Invoke(false, _selfObject.transform.position);
                 Dispose();
             }
-            else
+            else if(other.name == "Tree(Clone)")
             {
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY TREE ====</color>");
+                DestroyBulletEvent?.Invoke(true, _selfObject.transform.position);
                 Dispose();
-
-                // сделать для проверки попадания отдельний контроллер в котором нужно инвокать ивент и после уже спавнить чекер. Таким образом освободится булет
-                // от лишней логики
             }
+
         }
 
         private void Dispose()

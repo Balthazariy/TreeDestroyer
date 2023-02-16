@@ -804,6 +804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773941887}
   - component: {fileID: 773941888}
+  - component: {fileID: 773941889}
   m_Layer: 0
   m_Name: '[TREES]'
   m_TagString: Untagged
@@ -842,7 +843,19 @@ MonoBehaviour:
   _pivot1: {fileID: 1069955414}
   _treeParent: {fileID: 773941887}
   _treePrefabObject: {fileID: 2935963078183094017, guid: 0e6334819461db34baa24f7cbc9e51a3, type: 3}
-  _treeCount: 100
+  _treeCount: 200
+--- !u!114 &773941889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773941886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb1c2c650740eb4fa51bca4cf6a72a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &776654016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _finishObject: {fileID: 1837979061}
   _bulletPrefabObject: {fileID: 7316752027065970348, guid: 78bc45cbe5a23a54389511d6a6fea35f, type: 3}
+  _treeCheckerPrefabObject: {fileID: 446673188955049717, guid: fd727b34ec8da5a4fac07413be81c6a4, type: 3}
   _bulletParent: {fileID: 905916607}
   _shootPivot: {fileID: 896745263}
 --- !u!1 &1317710310

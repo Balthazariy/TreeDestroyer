@@ -24,7 +24,6 @@ namespace Balthazariy.TreeDestroyer
         private void Start()
         {
             InputController = new InputController(_mainPage);
-
         }
 
         private void OnDestroy()
