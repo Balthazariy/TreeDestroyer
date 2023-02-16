@@ -14,6 +14,7 @@ namespace Balthazariy.TreeDestroyer.Player
 
         [SerializeField] private float _moveDecreaseScaleFactor;
         [SerializeField] private GameObject _playerObject;
+        [SerializeField] private GameObject _finishObject;
 
         private void Start()
         {
@@ -38,9 +39,15 @@ namespace Balthazariy.TreeDestroyer.Player
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject != _finishObject)
+                return;
+
             _isMooving = false;
 
             Main.Instance.VictoryPage.Show();
+
+            Main.Instance.Victory = true;
+
         }
     }
 }

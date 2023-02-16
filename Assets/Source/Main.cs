@@ -12,15 +12,22 @@ namespace Balthazariy.TreeDestroyer
 
         [SerializeField] private MainPage _mainPage;
         [SerializeField] private VictoryPage _victoryPage;
+        [SerializeField] private GameOverPage _gameOverPage;
+
+        private bool _gameOver;
+        private bool _victory;
 
         public VictoryPage VictoryPage { get => _victoryPage; private set => _victoryPage = value; }
+        public GameOverPage GameOverPage { get => _gameOverPage; private set => _gameOverPage = value; }
+
+        public bool GameOver { get => _gameOver; set => _gameOver = value; }
+        public bool Victory { get => _victory; set => _victory = value; }
 
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                Debug.Log("<color=#47EB92>==== MAIN INSTANCE INITED ====</color>");
             }
         }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
@@ -14,9 +15,13 @@ namespace Balthazariy.TreeDestroyer.UI
 
         private byte _tapType;
 
+        private bool _tapped;
+
+        private string _tempTapString;
+
         [SerializeField] private TextMeshProUGUI _tapTypeText;
 
-        private bool _tapped;
+        [SerializeField] private GameObject _playerObject;
 
         private void Update()
         {
@@ -31,39 +36,61 @@ namespace Balthazariy.TreeDestroyer.UI
                 if (!_tapped) 
                     return;
 
-                float holdDownTime = Time.time - _holdDownStartTime;
-                string text = "";
+                if (Main.Instance.GameOver)
+                    return;
 
-                if (holdDownTime <= 1f)
-                    text = "Tap";
+                if (Main.Instance.Victory)
+                    return;
 
-                if (holdDownTime > 1 && holdDownTime <= 2)
-                    text = "Short tap";
-
-                if (holdDownTime > 2)
-                    text = "Long tap";
-
-                _tapTypeText.text = text;
+                UpdateTapType();
             }
 
             if (Input.GetMouseButtonUp(0))
             {
+                if (Main.Instance.GameOver)
+                    return;
+
+                if (Main.Instance.Victory)
+                    return;
+
                 _tapped = false;
                 _tapTypeText.text = "";
-                Debug.Log("<color=#F20F6B>==== SHOOT BUTTON CLICKED ====</color>");
-                float holdDownTime = Time.time - _holdDownStartTime;
 
-                if (holdDownTime <= 1f)
-                    _tapType = 0;
-
-                if (holdDownTime > 1 && holdDownTime <= 2)
-                    _tapType = 1;
-
-                if (holdDownTime > 2)
-                    _tapType = 2;
+                UpdateTapType();
 
                 ShootButtonClickEvent?.Invoke(_tapType);
             }
+        }
+
+        private void UpdateTapType()
+        {
+            float holdDownTime = Time.time - _holdDownStartTime;
+
+            if (holdDownTime <= 1f)
+            {
+                _tapType = 0;
+                _tempTapString = "Tap";
+            }
+
+            if (holdDownTime > 1 && holdDownTime <= 2)
+            {
+                _tapType = 1;
+                _tempTapString = "Short tap";
+            }
+
+            if (holdDownTime > 2 && holdDownTime <= 5)
+            {
+                _tapType = 2;
+                _tempTapString = "Long tap";
+            }
+
+            if (holdDownTime > 5)
+            {
+                _tapType = 5;
+                _tempTapString = "Extra Long tap";
+            }
+
+            _tapTypeText.text = _tempTapString;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Balthazariy.TreeDestroyer.Player
         [SerializeField] private Move _movePlayer;
         [SerializeField] private GameObject _playerObject;
 
-        [SerializeField] private float _tapDecreaseScaleFactor;
-        [SerializeField] private float _holdTapDecreaseScaleFactor;
+        private float _tapDecreaseScaleFactor = 0.4f;
+        private float _holdTapDecreaseScaleFactor = 1.2f;
 
         private bool _canShoot;
         private float _cooldown = 0.5f;
@@ -37,12 +37,18 @@ namespace Balthazariy.TreeDestroyer.Player
 
         private void OnScreenTouchEventHandler(byte force)
         {
-            Debug.Log("<color=#0E72E8>==== SHOOTED ====</color>");
             DoShoot(force);
         }
 
         private void Update()
         {
+            if (Main.Instance.GameOver)
+                return;
+
+            if (Main.Instance.Victory)
+                return;
+
+
             if (!_canShoot)
             {
                 _couldownTimer -= Time.deltaTime;
@@ -59,9 +65,23 @@ namespace Balthazariy.TreeDestroyer.Player
         {
             if (_canShoot)
             {
-                float scaleFactor = force == 0 ? 0 : (force == 1 ? _tapDecreaseScaleFactor : _holdTapDecreaseScaleFactor);
+                float scaleFactor = force == 0 ? 0 : 
+                                   (force == 1 ? _tapDecreaseScaleFactor : 
+                                   (force == 2 ? _holdTapDecreaseScaleFactor : _playerObject.transform.localScale.x));
 
-                    _playerObject.transform.localScale -= new Vector3(scaleFactor, scaleFactor, scaleFactor);
+                float previousScaleFactor = _playerObject.transform.localScale.x;
+
+                _playerObject.transform.localScale -= new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
+                if (scaleFactor == previousScaleFactor)
+                {
+                    Main.Instance.GameOver = true;
+                    _canShoot = false;
+                    Main.Instance.GameOverPage.Show();
+                    return;
+                }
+
+
 
                 Bullet currentBullet = Instantiate(_bulletPrefabObject, _bulletParent).GetComponent<Bullet>();
                 currentBullet.DestroyBulletEvent += DestroyBulletEventHandler;

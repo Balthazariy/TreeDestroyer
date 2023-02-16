@@ -38,7 +38,6 @@ namespace Balthazariy.TreeDestroyer.Trees
 
             transform.Rotate(new Vector3(0, 45, 0));
 
-            Debug.Log("<color=#6500EB>==== TREES GENERATED ====</color>");
         }
     }
 }
