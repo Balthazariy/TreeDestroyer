@@ -11,6 +11,9 @@ namespace Balthazariy.TreeDestroyer
         [HideInInspector] public InputController InputController { get; private set; }
 
         [SerializeField] private MainPage _mainPage;
+        [SerializeField] private VictoryPage _victoryPage;
+
+        public VictoryPage VictoryPage { get => _victoryPage; private set => _victoryPage = value; }
 
         private void Awake()
         {

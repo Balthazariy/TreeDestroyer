@@ -46,7 +46,7 @@ namespace Balthazariy.TreeDestroyer.Player
                 DestroyBulletEvent?.Invoke(false, _selfObject.transform.position);
                 Dispose();
             }
-            else if(other.name == "Tree(Clone)")
+            else if (other.name == "Tree(Clone)")
             {
                 Debug.Log("<color=#9EF20F>==== BULLET DESTROYED BY TREE ====</color>");
                 DestroyBulletEvent?.Invoke(true, _selfObject.transform.position);

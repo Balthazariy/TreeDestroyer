@@ -9,10 +9,14 @@ namespace Balthazariy.TreeDestroyer.Controllers
 
         private MainPage _mainPage;
 
+        private bool _isEndedGame;
+
+        public bool IsEndedGame { get => _isEndedGame; set => _isEndedGame = value; }
+
         public InputController(MainPage mainPage)
         {
             _mainPage = mainPage;
-
+            IsEndedGame = false;
             _mainPage.ShootButtonClickEvent += ShootButtonClickEventHandler;
         }
 
@@ -23,7 +27,8 @@ namespace Balthazariy.TreeDestroyer.Controllers
 
         private void ShootButtonClickEventHandler()
         {
-            ScreenTouchEvent?.Invoke();
+            if (!IsEndedGame)
+                ScreenTouchEvent?.Invoke();
         }
     }
 }

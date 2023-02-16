@@ -13,6 +13,8 @@ namespace Balthazariy.TreeDestroyer.Player
         [SerializeField] private Transform _bulletParent;
         [SerializeField] private Transform _shootPivot;
 
+        [SerializeField] private Move _movePlayer;
+
         private bool _canShoot;
         private float _cooldown = 0.5f;
         private float _couldownTimer;
@@ -68,6 +70,10 @@ namespace Balthazariy.TreeDestroyer.Player
             {
                 TreeChecker checker = Instantiate(_treeCheckerPrefabObject, _bulletParent).GetComponent<TreeChecker>();
                 checker.Init(worldPosition);
+            }
+            else
+            {
+                _movePlayer.MovePlayerToFinish();
             }
         }
     }
