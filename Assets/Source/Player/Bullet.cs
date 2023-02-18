@@ -48,17 +48,15 @@ namespace Balthazariy.TreeDestroyer.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject == _finishObject)
+            if (other.gameObject == _finishObject || other.name == "Doors")
             {
                 DestroyBulletEvent?.Invoke(false, _selfObject.transform.position, _scaleFactor);
-                Dispose();
             }
             else if (other.name == "Tree(Clone)")
             {
                 DestroyBulletEvent?.Invoke(true, _selfObject.transform.position, _scaleFactor);
-                Dispose();
             }
-
+            Dispose();
         }
 
         private void Dispose()

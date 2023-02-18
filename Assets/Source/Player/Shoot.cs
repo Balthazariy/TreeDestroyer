@@ -65,7 +65,7 @@ namespace Balthazariy.TreeDestroyer.Player
         {
             if (_canShoot)
             {
-                float scaleFactor = force == 0 ? 0 : 
+                float scaleFactor = force == 0 ? 0.1f : 
                                    (force == 1 ? _tapDecreaseScaleFactor : 
                                    (force == 2 ? _holdTapDecreaseScaleFactor : _playerObject.transform.localScale.x));
 
